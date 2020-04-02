@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css?family=Lobster&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-family: Lobster, sans-serif;
+    color: #00aa2b;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    background-color: #000016;
+}

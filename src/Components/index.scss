@@ -1,0 +1,30 @@
+.maze {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 1rem;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    height: 1.5rem;
+
+    &:nth-child(odd) {
+        height: 1px;
+    }
+}
+
+.row div {
+    height: 100%;
+    width: 1.5rem;
+
+    &:nth-child(odd) {
+        width: 1px;
+    }
+}
+
+.wall {
+    background-color: #00aa2b;
+}
