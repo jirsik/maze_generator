@@ -11,5 +11,5 @@ ReactDOM.render(
     height= {49}
     width= {99}
   />,
-  document.getElementById('app'),
+  document.getElementById('app')
 );

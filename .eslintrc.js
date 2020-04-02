@@ -21,6 +21,14 @@ module.exports = {
   },
   rules: {
     'no-console': 'off',
-    'no-alert': 'off',
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error',
+    'comma-dangle': ['error', {
+      'arrays': 'always-multiline',
+      'objects': 'always-multiline',
+      'imports': 'always-multiline',
+      'exports': 'always-multiline',
+      'functions': 'never'
+  }]
   },
 };
