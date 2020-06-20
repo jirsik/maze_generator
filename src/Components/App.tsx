@@ -3,25 +3,31 @@ import React, { useEffect, useState } from 'react';
 
 import './index.scss';
 
-export default function App({
+interface IProps {
+  height: number,
+  width: number,
+};
+
+const App = ({
   height,
   width,
-}) {
-  const [maze, setMaze] = useState([]);
-  const [builds, setBuilds] = useState([]);
+}: IProps) => {
+  const [maze, setMaze] = useState<string[][]>([]);
+  const [builds, setBuilds] = useState<number[][]>([]);
 
   const prepareStage = () => {
-    const stage = [];
+    const stage: string[][] = [];
 
-    for (let x = 0; x < height; x += 1) {
+    for (let x: number = 0; x < height; x += 1) {
       stage[x] = [];
-      for (let y = 0; y < width; y += 1) {
+      for (let y:number = 0; y < width; y += 1) {
         if (x === 0 || x === height - 1 || y === 0 || y === width - 1) {
           stage[x][y] = 'wall';
           continue;
         } else if (x % 2 === 0 && y % 2 === 0) {
           stage[x][y] = 'build';
-          setBuilds(builds.push([x, y]));
+          builds.push([x, y])
+          setBuilds(builds);
           continue;
         }
         stage[x][y] = 'path';
@@ -32,11 +38,11 @@ export default function App({
   };
 
 
-  const drawWall = (stage, build, direction) => {
+  const drawWall = (stage: any, build: any, direction: any) => {
     const updatedStage = stage;
-    let foundWall = false;
-    let lastSpot = build;
-    const nextSpot = [];
+    let foundWall: boolean = false;
+    let lastSpot: [number, number] = build;
+    const nextSpot: [number, number] = [0, 0];
     while (!foundWall) {
       let indexOfBuild = -1;
       nextSpot[0] = lastSpot[0] + ((direction - 2) % 2);
@@ -60,9 +66,9 @@ export default function App({
     return updatedStage;
   };
 
-  const randomNumber = (max) => Math.floor(Math.random() * max);
+  const randomNumber = (max: number) => Math.floor(Math.random() * max);
 
-  const generateMaze = (stage) => {
+  const generateMaze = (stage: string[][]): string[][] => {
     let updatedStage = stage;
     while (builds.length > 0) {
       const index = randomNumber(builds.length);
@@ -77,19 +83,21 @@ export default function App({
   };
 
   useEffect(() => {
-    const stage = prepareStage();
+    const stage: string[][] = prepareStage();
     setMaze(generateMaze(stage));
   }, []);
 
   return (
     <div className="maze">
-        {maze.map((row) => (
-            <div className="row">
-                {row.map((spot) => (
-                    <div className={spot}></div>
+        {maze.map((row, index) => (
+            <div key={index} className="row">
+                {row.map((spot, index2) => (
+                    <div key={index2} className={spot}></div>
                 ))}
             </div>
         ))}
-        </div>
+    </div>
   );
-}
+};
+
+export default App;

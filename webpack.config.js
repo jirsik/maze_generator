@@ -9,6 +9,7 @@ module.exports = {
     publicPath: '/',
   },
   resolve: {
+    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     modules: [
       path.resolve('./frontend'),
       path.resolve('./node_modules'),
@@ -17,17 +18,19 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
+        test: /\.(js|ts)x?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
           presets: [
             '@babel/preset-env',
             '@babel/preset-react',
+            '@babel/typescript',
           ],
           plugins: [
             '@babel/plugin-proposal-class-properties',
             'babel-plugin-transform-async-to-promises',
+            '@babel/proposal-object-rest-spread',
           ],
         },
       },
