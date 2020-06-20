@@ -20,7 +20,7 @@ module.exports = {
     }
   },
   rules: {
-    'no-console': 'off',
+    'no-console': 'on',
     'react/jsx-uses-react': 'error',
     'react/jsx-uses-vars': 'error',
     'comma-dangle': ['error', {

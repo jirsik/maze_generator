@@ -4,11 +4,11 @@ import ReactDOM from 'react-dom';
 import './index.html';
 import './index.scss';
 
-import App from './Components/App';
+import Maze from './Components/Maze';
 
 ReactDOM.render(
-  <App
-    height= {49}
+  <Maze
+    height= {41}
     width= {99}
   />,
   document.getElementById('app')

@@ -6,7 +6,8 @@
   "scripts": {
     "build": "webpack -d",
     "build:prod": "webpack -p",
-    "watch": "webpack -wd"
+    "watch": "webpack -wd",
+    "ts-check": "tsc --noEmit --diagnostics"
   },
   "author": "The amazing me",
   "license": "ISC",

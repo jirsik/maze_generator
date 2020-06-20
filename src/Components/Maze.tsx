@@ -1,5 +1,6 @@
 /* eslint-disable no-continue */
 import React, { useEffect, useState } from 'react';
+import Pawn from './Pawn';
 
 import './index.scss';
 
@@ -8,14 +9,19 @@ interface IProps {
   width: number,
 };
 
-const App = ({
+const Maze = ({
   height,
   width,
 }: IProps) => {
   const [maze, setMaze] = useState<string[][]>([]);
-  const [builds, setBuilds] = useState<number[][]>([]);
+  const [builds, setBuilds] = useState<[number, number][]>([]);
+  
+  useEffect(() => {
+    const stage: string[][] = prepareStage();
+    setMaze(generateMaze(stage));
+  }, []);
 
-  const prepareStage = () => {
+  const prepareStage = (): string[][] => {
     const stage: string[][] = [];
 
     for (let x: number = 0; x < height; x += 1) {
@@ -38,7 +44,7 @@ const App = ({
   };
 
 
-  const drawWall = (stage: any, build: any, direction: any) => {
+  const drawWall = (stage: string[][], build: [number, number], direction: number): string[][] => {
     const updatedStage = stage;
     let foundWall: boolean = false;
     let lastSpot: [number, number] = build;
@@ -66,14 +72,16 @@ const App = ({
     return updatedStage;
   };
 
-  const randomNumber = (max: number) => Math.floor(Math.random() * max);
+  const randomNumber = (max: number): number => {
+    return Math.floor(Math.random() * max);
+  };
 
   const generateMaze = (stage: string[][]): string[][] => {
-    let updatedStage = stage;
+    let updatedStage: string[][] = stage;
     while (builds.length > 0) {
-      const index = randomNumber(builds.length);
-      const direction = randomNumber(4);
-      const build = builds[index];
+      const index: number = randomNumber(builds.length);
+      const direction: number = randomNumber(4);
+      const build: [number, number] = builds[index];
 
       setBuilds(builds.splice(index, 1));
       updatedStage[build[0]][build[1]] = 'wall';
@@ -82,22 +90,23 @@ const App = ({
     return updatedStage;
   };
 
-  useEffect(() => {
-    const stage: string[][] = prepareStage();
-    setMaze(generateMaze(stage));
-  }, []);
-
   return (
     <div className="maze">
+      <div>
         {maze.map((row, index) => (
-            <div key={index} className="row">
+          <div key={index} className="row">
                 {row.map((spot, index2) => (
-                    <div key={index2} className={spot}></div>
-                ))}
+                  <div key={index2} className={spot}></div>
+                  ))}
             </div>
         ))}
+        <Pawn
+          mazeHeight={height}
+          mazeWidth={width}
+        />
+      </div>
     </div>
   );
 };
 
-export default App;
+export default Maze;
