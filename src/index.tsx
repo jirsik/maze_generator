@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import './index.html';
 import './index.scss';
 
-import App from './Components/App.tsx';
+import App from './Components/App';
 
 ReactDOM.render(
   <App
