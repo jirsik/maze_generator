@@ -5,6 +5,7 @@ import './index.scss';
 interface IProps {
   mazeHeight: number,
   mazeWidth: number,
+  aproveMove: (x: number, y: number, nextX: number, nextY: number) => boolean,
 };
 
 const Pawn = (props: IProps) => {
@@ -27,33 +28,35 @@ const Pawn = (props: IProps) => {
   }, []);
 
   const move = (event: KeyboardEvent): void => {
-    const { mazeHeight, mazeWidth } = props;
-    let myX = xRef.current;
-    let myY = yRef.current;
+    const { aproveMove, mazeHeight, mazeWidth } = props;
+    let nextX = xRef.current;
+    let nextY = yRef.current;
     switch (event.key) {
       case "ArrowRight":
-        if (myX < (mazeWidth - 3) / 2) {
-          myX ++;
+        if (nextX < (mazeWidth - 3) / 2) {
+          nextX ++;
         }
         break;
       case "ArrowLeft":
-        if (myX > 0) {
-          myX --;
+        if (nextX > 0) {
+          nextX --;
         }
         break;
       case "ArrowUp":
-        if (myY > 0) {
-          myY --;
+        if (nextY > 0) {
+          nextY --;
         }
         break;
       case "ArrowDown":
-        if (myY < (mazeHeight - 3) / 2) {
-          myY ++;
+        if (nextY < (mazeHeight - 3) / 2) {
+          nextY ++;
         }
         break;
     }
-      setX(myX);
-      setY(myY); 
+    if (aproveMove(xRef.current, yRef.current, nextX, nextY) === true) {
+      setX(nextX);
+      setY(nextY); 
+    }
   }
  
   return (

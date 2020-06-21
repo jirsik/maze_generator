@@ -1,5 +1,5 @@
 /* eslint-disable no-continue */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Pawn from './Pawn';
 
 import './index.scss';
@@ -13,9 +13,15 @@ const Maze = ({
   height,
   width,
 }: IProps) => {
-  const [maze, setMaze] = useState<string[][]>([]);
+  const [maze, _setMaze] = useState<string[][]>([]);
   const [builds, setBuilds] = useState<[number, number][]>([]);
-  
+
+  const mazeRef = useRef(maze);
+  const setMaze = (maze: string[][]): void => {
+    mazeRef.current = maze;
+    _setMaze(maze);
+  };
+
   useEffect(() => {
     const stage: string[][] = prepareStage();
     setMaze(generateMaze(stage));
@@ -90,6 +96,25 @@ const Maze = ({
     return updatedStage;
   };
 
+  const pawnMoveCallback = (x: number, y: number, nextX: number, nextY: number): boolean => {
+    let neighbour = 'unknown';
+    if (x < nextX) {
+      neighbour = mazeRef.current[y * 2 + 1][x * 2 + 2];
+    } else if (x > nextX) {
+      neighbour = mazeRef.current[y * 2 + 1][x * 2];
+    } else if (y < nextY) {
+      neighbour = mazeRef.current[y * 2 + 2][x * 2 + 1];
+    } else if (y > nextY) {
+      neighbour = mazeRef.current[y * 2][x * 2 + 1];
+    }
+
+    if (neighbour === 'path') {
+      return true;
+    }
+
+    return false;
+  };
+
   return (
     <div className="maze">
       <div>
@@ -103,6 +128,7 @@ const Maze = ({
         <Pawn
           mazeHeight={height}
           mazeWidth={width}
+          aproveMove={pawnMoveCallback}
         />
       </div>
     </div>
